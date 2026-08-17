@@ -2,14 +2,7 @@ import { eq } from "drizzle-orm"
 import { randomUUID } from "node:crypto"
 
 import { db } from "@/db"
-import {
-  draftOrder,
-  draftState,
-  leagues,
-  players,
-  teamPlayers,
-  teams,
-} from "@/db/schema"
+import { draftState, leagues } from "@/db/schema"
 
 type CreateLeagueInput = {
   name: string
@@ -48,7 +41,7 @@ export async function createLeague(input: CreateLeagueInput) {
 
 export async function getLeague(id: string) {
   const league = await db.query.leagues.findFirst({
-    where: eq(leagues.id, id),
+    where: { id },
   })
 
   if (!league) {
@@ -56,16 +49,16 @@ export async function getLeague(id: string) {
   }
 
   const leaguePlayers = await db.query.players.findMany({
-    where: eq(players.leagueId, id),
+    where: { leagueId: id },
   })
   const leagueTeams = await db.query.teams.findMany({
-    where: eq(teams.leagueId, id),
+    where: { leagueId: id },
   })
   const state = await db.query.draftState.findFirst({
-    where: eq(draftState.leagueId, id),
+    where: { leagueId: id },
   })
   const order = await db.query.draftOrder.findMany({
-    where: eq(draftOrder.leagueId, id),
+    where: { leagueId: id },
   })
 
   return {
@@ -83,7 +76,7 @@ export async function listLeagues() {
 
 export async function updateLeague(id: string, input: UpdateLeagueInput) {
   const league = await db.query.leagues.findFirst({
-    where: eq(leagues.id, id),
+    where: { id },
   })
 
   if (!league) {
@@ -103,7 +96,7 @@ export async function updateLeague(id: string, input: UpdateLeagueInput) {
 
 export async function deleteLeague(id: string) {
   const league = await db.query.leagues.findFirst({
-    where: eq(leagues.id, id),
+    where: { id },
   })
 
   if (!league) {

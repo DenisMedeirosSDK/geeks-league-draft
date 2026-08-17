@@ -1,5 +1,7 @@
 import { z } from "zod"
 import type { FastifyTypedInstance } from "@/@types"
+import { leagueRoutes } from "./leagues/routes"
+import { playersRoutes } from "./player/routes"
 
 export async function routes(app: FastifyTypedInstance) {
   app.get(
@@ -17,4 +19,7 @@ export async function routes(app: FastifyTypedInstance) {
       return reply.status(200).send({ message: "Hello, World!" })
     },
   )
+
+  app.register(leagueRoutes, { prefix: "/leagues" }),
+  app.register(playersRoutes, { prefix: "/players" })
 }
