@@ -148,6 +148,7 @@ Depois, preencha os valores:
 - `TURSO_AUTH_TOKEN`: token de autenticação do banco
 
 > Importante: sem esses valores, o app não consegue conectar ao banco.
+Acesse o site [Turso](https://turso.tech/) para criar seu bando de dados e obter as credenciais na nuvem.
 
 ### 4.4. Inicie o servidor em modo desenvolvimento
 
